@@ -1,3 +1,4 @@
+#include <SoftwareSerial.h>
 #include "LPD8806.h"
 #include "SPI.h" // Comment out this line if using Trinket or Gemma
 #ifdef __AVR_ATtiny85__
@@ -9,7 +10,7 @@
 /*****************************************************************************/
 
 // Number of RGB LEDs in strand:
-int nLEDs = 100;
+int nLEDs = 30;
 
 // Chose 2 pins for output; can be any valid output pins:
 int dataPin  = 1;
@@ -29,28 +30,31 @@ LPD8806 strip = LPD8806(nLEDs, dataPin, clockPin);
 //LPD8806 strip = LPD8806(nLEDs);
 
 void setup() {
-/*#if defined(__AVR_ATtiny85__) && (F_CPU == 16000000L)
+#if defined(__AVR_ATtiny85__) && (F_CPU == 16000000L)
   clock_prescale_set(clock_div_1); // Enable 16 MHz on Trinket
 #endif
-*/
+
   // Start up the LED strip
   strip.begin();
 
   // Update the strip, to start they are all 'off'
   strip.show();
+  //Serial.begin(9600);
+  
 }
 
 
 void loop() {
 
   // Send a simple pixel chase in...
-  colorChase(strip.Color(127, 127, 127), 100); // White
-  colorChase(strip.Color(127,   0,   0), 100); // Red
-  colorChase(strip.Color(127, 127,   0), 100); // Yellow
-  colorChase(strip.Color(  0, 127,   0), 100); // Green
-  colorChase(strip.Color(  0, 127, 127), 100); // Cyan
-  colorChase(strip.Color(  0,   0, 127), 100); // Blue
-  colorChase(strip.Color(127,   0, 127), 100); // Violet
+ //colorChase(strip.Color(127, 127, 127), 100); // White
+ colorChase(strip.Color(127,   0,   0), 100); // Red
+  //colorChase(strip.Color(127, 127,   0), 100); // Yellow
+  //colorChase(strip.Color(  0, 127,   0), 100); // Green
+ // colorChase(strip.Color(  0, 127, 127), 100); // Cyan
+  //colorChase(strip.Color(  0,   0, 127), 100); // Blue
+  //colorChase(strip.Color(127,   0, 127), 1000); // Violet
+  
 
  /* // Send a theater pixel chase in...
   theaterChase(strip.Color(127, 127, 127), 50); // White
@@ -61,14 +65,15 @@ void loop() {
   theaterChase(strip.Color(  0,   0, 127), 50); // Blue
   theaterChase(strip.Color(127,   0, 127), 50); // Violet*/
 
-  /*// Fill the entire strip with...
-  //colorWipe(strip.Color(127,   0,   0), 50);  // Red
-  //colorWipe(strip.Color(  0, 127,   0), 50);  // Green
-  //colorWipe(strip.Color(  0,   0, 127), 50);  // Blue
+  // Fill the entire strip with...
+  //colorWipe(strip.Color(127,   0,   0), 1000);  // Red
+  printf("executed!");
+  //colorWipe(strip.Color(  0, 127,   0), 1000);  // Green
+  //colorWipe(strip.Color(  0,   0, 127), 1000);  // Blue
 
-  //rainbow(10);
+ //rainbow(1000);
   //rainbowCycle(0);  // make it go through the cycle fairly fast
-  //theaterChaseRainbow(50);*/
+  //theaterChaseRainbow(50);
 }
 
 void rainbow(uint8_t wait) {
@@ -79,7 +84,10 @@ void rainbow(uint8_t wait) {
       strip.setPixelColor(i, Wheel( (i + j) % 384));
     }  
     strip.show();   // write all the pixels out
+    //Serial.println("finish set");
     delay(wait);
+   // Serial.println("Another cycle");
+
   }
 }
 
