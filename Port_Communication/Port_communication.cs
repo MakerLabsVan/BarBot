@@ -53,7 +53,7 @@ using Zaber.PlugIns;
             var axis3 = PortFacade.GetConversation(2);
             // Get conversations for the three devices you want to move.
            var distance_between_dispensers = 199108; //"199108" is the distance (unit in data) between to neighbor drink dispensers. Value should be constant.
-           var first_dispenser_position = 307456//"307456" is the position of the first drink dispenser. 
+           var first_dispenser_position = 307456;//"307456" is the position of the first drink dispenser. 
             var range_axis1=(drink_num-1)*distance_between_dispensers; // Calculate the distance between target dispenser and the first dispenser
             var data_range_axis1=first_dispenser_position+range_axis1;// Calculate the future absolute position of the axis1
             var axis3_maxspeed=825650;// the maximum speed for axis3. Value should be constant
