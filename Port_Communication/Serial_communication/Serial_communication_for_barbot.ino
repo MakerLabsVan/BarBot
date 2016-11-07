@@ -1,15 +1,9 @@
 #include <SoftwareSerial.h>
-
 #include <LPD8806.h>
 #include "SPI.h" // Comment out this line if using Trinket or Gemma
-
 #ifdef __AVR_ATtiny85__
  #include <avr/power.h>
 #endif
-
-// Example to control LPD8806-based RGB LED Modules in a strip
-
-/*****************************************************************************/
 
 // Number of RGB LEDs in strand:
 int nLEDs = 60;
@@ -23,96 +17,47 @@ int clockPin = 2;
 // parameters are SPI data and clock pins:
 LPD8806 strip = LPD8806(nLEDs, dataPin, clockPin);
 
-// You can optionally use hardware SPI for faster writes, just leave out
-// the data and clock pin parameters.  But this does limit use to very
-// specific pins on the Arduino.  For "classic" Arduinos (Uno, Duemilanove,
-// etc.), data = pin 11, clock = pin 13.  For Arduino Mega, data = pin 51,
-// clock = pin 52.  For 32u4 Breakout Board+ and Teensy, data = pin B2,
-// clock = pin B1.  For Leonardo, this can ONLY be done on the ICSP pins.
-//LPD8806 strip = LPD8806(nLEDs);
 
 void setup() {
 #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000L)
   clock_prescale_set(clock_div_1); // Enable 16 MHz on Trinket
 #endif
 
-  // Start up the LED strip
+  // Start up the serial port
  Serial.begin(9600);
-   // Serial.println("Start Serial here");
+  // Start up the LED strip
   strip.begin();
-  //Serial.println("come here");
-
   // Update the strip, to start they are all 'off'
   strip.show();
-    //Serial.println("reach here");
 
 }
 
 
 void loop() {
-char data_1 = '1';
-char data_2 = '0';
-//colorChase(strip.Color(127, 127, 127), 50); 
- // colorChase(strip.Color(127,   0,   0), 50); // Red
-Serial.println("end here");
+char data_1 = '1';//set the initial value of data_1
+char data_2 = '0';//set the initial value of data_2
+//The reason for initialize two data value here is that sometimes the LED strip will send 
+//some random data to the serial port. If using only one data value, it may be polluted by
+//this random value and the program will go wrong
+
 while (data_1 == '1'){
-  data_2=rainbow(10);
+  data_2=rainbow(10);//the LED pattern when the machine is standby
   if (data_2=='2'){
-    break;
+    break;//when machine is running, break the loop and change the pattern
   }
   
 }
-data_1='0';
+data_1='0';// Change the value of data_1
 while (data_2=='2'){
-  int a=millis()%256;
-  Serial.println(a);
-  randomSeed(a);
+  int a=millis();
+  randomSeed(a);//set the random seed using current time in ms.
   
-  data_1=colorWipe(strip.Color(random(127), random(127), random(127)), 10); // White
+  data_1=colorWipe(strip.Color(random(127), random(127), random(127)), 10); // fill the strip with the random color
   if (data_1=='1'){
-    break;
+    break;//when machine finishes the job, break the loop and change the pattern
+    }
+
   }
-  /*colorChase(strip.Color(127,   0,   0), 50); // Red
-  colorChase(strip.Color(127, 127,   0), 50); // Yellow
-  colorChase(strip.Color(  0, 127,   0), 50); // Green
-  colorChase(strip.Color(  0, 127, 127), 50); // Cyan
-  colorChase(strip.Color(  0,   0, 127), 50); // Blue
-  colorChase(strip.Color(127,   0, 127), 50); // Violet*/
-  /*data_1 = Serial.read();
-  Serial.println(data_1);
-  if (data_1=='1'){
-    break;
-  }*/
-}
-data_2 == 0;
-  // Send a simple pixel chase in...
- /* colorChase(strip.Color(127, 127, 127), 50); // White
-  colorChase(strip.Color(127,   0,   0), 50); // Red
-  colorChase(strip.Color(127, 127,   0), 50); // Yellow
-  colorChase(strip.Color(  0, 127,   0), 50); // Green
-  colorChase(strip.Color(  0, 127, 127), 50); // Cyan
-  colorChase(strip.Color(  0,   0, 127), 50); // Blue
-  colorChase(strip.Color(127,   0, 127), 50); // Violet*/
-
-  // Send a theater pixel chase in...
- /* theaterChase(strip.Color(127, 127, 127), 50); // White
-  theaterChase(strip.Color(127,   0,   0), 50); // Red
-  theaterChase(strip.Color(127, 127,   0), 50); // Yellow
-  theaterChase(strip.Color(  0, 127,   0), 50); // Green
-  theaterChase(strip.Color(  0, 127, 127), 50); // Cyan
-  theaterChase(strip.Color(  0,   0, 127), 50); // Blue
-  theaterChase(strip.Color(127,   0, 127), 50); // Violet*/
-
-  // Fill the entire strip with...
-  //colorWipe(strip.Color(127,   0,   0), 50);  // Red
-  //colorWipe(strip.Color(  0, 127,   0), 50);  // Green
-  //colorWipe(strip.Color(  0,   0, 127), 50);  // Blue
-
-  //rainbow(10);*/
- // rainbowCycle(0);  // make it go through the cycle fairly fast
-   // Serial.println("end here");
-
-  //theaterChaseRainbow(50);
 }
 
 char rainbow(uint8_t wait) {
@@ -122,8 +67,7 @@ char rainbow(uint8_t wait) {
     for (i=0; i < strip.numPixels(); i++) {
       strip.setPixelColor(i, Wheel( (i + j) % 384));
       char data= Serial.read();
-  //Serial.println(data);
-  if (data=='2'){
+  if (data=='2'){//check the serial port everytime writing the pixel.
     return '2';
   }
     }  
@@ -162,8 +106,7 @@ char colorWipe(uint32_t c, uint8_t wait) {
       strip.show();
       delay(wait);
       char data_1 = Serial.read();
-      //Serial.println(data_1);
-      if (data_1=='1'){
+      if (data_1=='1'){//check the serial port everytime writing the pixel.
       return '1';
   }
   }
