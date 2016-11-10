@@ -7,7 +7,7 @@
 
 // Number of RGB LEDs in strand:
 int nLEDs = 60;
-
+int mark=-3;
 // Chose 2 pins for output; can be any valid output pins:
 int dataPin  = 4;
 int clockPin = 2;
@@ -52,10 +52,26 @@ while (data_2=='2'){
   int a=millis();
   randomSeed(a);//set the random seed using current time in ms.
   
-  data_1=colorWipe(strip.Color(random(127), random(127), random(127)), 10); // fill the strip with the random color
+  data_1=colorWipe(strip.Color(random(127), random(127), random(127)), 10, mark); // fill the strip with the random color
   if (data_1=='1'){
     break;//when machine finishes the job, break the loop and change the pattern
     }
+    if (data_1=='5'){
+      mark = 10;
+    }
+    if (data_1=='6'){
+      mark = 11;
+    }
+    if (data_1=='7'){
+      mark = 12;
+    }
+    if (data_1=='8'){
+      mark = 13;
+      }
+      if (data_1 == '9'){
+        mark =-3;
+      }
+    
 
   }
 }
@@ -97,18 +113,42 @@ void rainbowCycle(uint8_t wait) {
 }
 
 // Fill the dots progressively along the strip.
-char colorWipe(uint32_t c, uint8_t wait) {
+char colorWipe(uint32_t c, uint8_t wait,int LED_mark) {
   int i;
-
+  Serial.print("LED MARK is");
+  Serial.println(LED_mark);
   for (i=0; i < strip.numPixels(); i++) {
-      
+    if (i==LED_mark){
+      strip.setPixelColor(i,strip.Color(127,0,0));
+      strip.show();
+      delay(wait);
+      Serial.println("Success!");
+    }else{
+      //Serial.println(strip.numPixels());
       strip.setPixelColor(i, c);
       strip.show();
       delay(wait);
       char data_1 = Serial.read();
       if (data_1=='1'){//check the serial port everytime writing the pixel.
+      mark=-3;
       return '1';
-  }
+      }
+      if (data_1=='5'){
+        return '5';
+      }
+      if (data_1=='6'){
+        return '6';
+      }
+      if (data_1=='7'){
+        return '7';
+      }
+      if (data_1=='8'){
+        return '8';
+      }
+      if (data_1=='9'){
+        return '9';
+      }
+    }
   }
   return '0';
 }

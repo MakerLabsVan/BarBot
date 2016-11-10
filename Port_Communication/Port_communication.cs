@@ -21,18 +21,33 @@ using Zaber.PlugIns;
         var currentPosition = Conversation.Request("get pos").Data;
 
 		myport.WriteLine("2"); // Send characters to the Arduino to change the LED pattern
-
-       
+            axis2.Request("set maxspeed",75000);
+            axis2.Request("move abs 700000");
+            myport.WriteLine("5");
             Godrink(1);
+            myport.WriteLine("6");
             Godrink(2);
+            myport.WriteLine("7");
             Godrink(3);
+            myport.WriteLine("8");
             Godrink(4);
+            myport.WriteLine("9");
+            axis2.PollUntilIdle();
+            axis2.Request("set maxspeed",150000);
+            axis1.Request("move abs 1511811");
+             axis1.PollUntilIdle();
+            axis2.Request("move abs 1000000");
+           
+            axis2.PollUntilIdle();
+            Sleep(2000);
+            axis2.Request("set maxspeed",503316);
        // Move the axes to get alcohol. Numbers here represent the dispensers from left to right.
 		
-        axis1.Request("move abs 0");
         axis2.Request("move abs 0");
-        axis1.PollUntilIdle();
+        Sleep(2000);
+        axis1.Request("move abs 0");
         axis2.PollUntilIdle();
+        axis1.PollUntilIdle();
         // Finish the whole process, move the axis back
         myport.WriteLine("1");
         myport.Close();
@@ -78,7 +93,7 @@ using Zaber.PlugIns;
                 
  
                 axis1.Request("move abs", data_range_axis1);//Move axis1
-                axis2.Request("move abs", data_range_axis2);//Move axis2
+                //axis2.Request("move abs", data_range_axis2);//Move axis2
                 axis3.Request("set maxspeed",speed_axis3);//Set speed
 
                 axis3.Request("move abs 11363");//Move axis 3
