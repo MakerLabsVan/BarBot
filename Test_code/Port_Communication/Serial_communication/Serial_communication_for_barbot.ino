@@ -11,6 +11,8 @@ int mark=-3;
 // Chose 2 pins for output; can be any valid output pins:
 int dataPin  = 4;
 int clockPin = 2;
+const int buttonPin = 10; 
+int buttonState = 0;   
 
 // First parameter is the number of LEDs in the strand.  The LED strips
 // are 32 LEDs per meter but you can extend or cut the strip.  Next two
@@ -22,7 +24,7 @@ void setup() {
 #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000L)
   clock_prescale_set(clock_div_1); // Enable 16 MHz on Trinket
 #endif
-
+ pinMode(buttonPin, INPUT);
   // Start up the serial port
  Serial.begin(9600);
   // Start up the LED strip
@@ -42,6 +44,18 @@ char data_2 = '0';//set the initial value of data_2
 
 while (data_1 == '1'){
   data_2=rainbow(10);//the LED pattern when the machine is standby
+  buttonState = digitalRead(buttonPin);
+  if (buttonState == HIGH) {
+    delay(100);
+    if (buttonState == HIGH) {
+      digitalWrite(ledPin, HIGH);
+      Serial.println("E");
+      delay(1000);
+    }
+  } else {
+    // turn LED off:
+    digitalWrite(ledPin, LOW);
+  }
   if (data_2=='2'){
     break;//when machine is running, break the loop and change the pattern
   }
