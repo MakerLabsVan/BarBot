@@ -87,13 +87,20 @@ while (data_2=='2'){
 
 char rainbow(uint8_t wait) {
   int i, j;
+  const int buttonPin = 10; 
    
   for (j=0; j < 384; j++) {     // 3 cycles of all 384 colors in the wheel
     for (i=0; i < strip.numPixels(); i++) {
       strip.setPixelColor(i, Wheel( (i + j) % 384));
       char data= Serial.read();
-  if (data=='2'){//check the serial port everytime writing the pixel.
-    return '2';
+      int buttonState = digitalRead(buttonPin);
+      if (buttonState == HIGH) {
+        Serial.println("E");
+        delay(100);
+      } 
+      
+      if (data=='2'){//check the serial port everytime writing the pixel.
+        return '2';
   }
     }  
     strip.show();   // write all the pixels out
