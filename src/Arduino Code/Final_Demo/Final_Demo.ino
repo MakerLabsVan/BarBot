@@ -11,8 +11,10 @@ int mark=-3;
 // Chose 2 pins for output; can be any valid output pins:
 int dataPin  = 4;
 int clockPin = 2;
-const int buttonPin = 10; 
+const int buttonPin = 7; 
 int buttonState = 0;   
+int Distance=0;
+
 
 // First parameter is the number of LEDs in the strand.  The LED strips
 // are 32 LEDs per meter but you can extend or cut the strip.  Next two
@@ -33,7 +35,10 @@ void setup() {
   strip.begin();
   // Update the strip, to start they are all 'off'
   strip.show();
-
+  pinMode(8, OUTPUT);     
+  pinMode(9, OUTPUT);
+  digitalWrite(8, LOW);
+  digitalWrite(9, LOW);
 }
 
 
@@ -61,7 +66,7 @@ while (data_2=='2'){
   int a=millis();
   randomSeed(a);//set the random seed using current time in ms.
   
-  data_1=colorWipe(strip.Color(random(127), random(127), random(127)), 10, mark); // fill the strip with the random color
+  data_1=colorWipe(strip.Color(random(127), random(127), random(127)), 20, mark); // fill the strip with the random color
   if (data_1=='1'){
     break;//when machine finishes the job, break the loop and change the pattern
     }
@@ -80,20 +85,28 @@ while (data_2=='2'){
       if (data_1 == '9'){
         mark =-3;
       }
-    
-
-  }
+      if (data_1 == 'S'){
+        Motor();
+    }
+  } 
 }
 
 char rainbow(uint8_t wait) {
   int i, j;
+  const int buttonPin = 7; 
    
   for (j=0; j < 384; j++) {     // 3 cycles of all 384 colors in the wheel
     for (i=0; i < strip.numPixels(); i++) {
       strip.setPixelColor(i, Wheel( (i + j) % 384));
       char data= Serial.read();
-  if (data=='2'){//check the serial port everytime writing the pixel.
-    return '2';
+      int buttonState = digitalRead(buttonPin);
+      if (buttonState == HIGH) {
+        Serial.println("E");
+        delay(100);
+      } 
+      
+      if (data=='2'){//check the serial port everytime writing the pixel.
+        return '2';
   }
     }  
     strip.show();   // write all the pixels out
@@ -124,14 +137,14 @@ void rainbowCycle(uint8_t wait) {
 // Fill the dots progressively along the strip.
 char colorWipe(uint32_t c, uint8_t wait,int LED_mark) {
   int i;
-  Serial.print("LED MARK is");
-  Serial.println(LED_mark);
+  //Serial.print("LED MARK is");
+  //Serial.println(LED_mark);
   for (i=0; i < strip.numPixels(); i++) {
     if (i==LED_mark){
       strip.setPixelColor(i,strip.Color(127,0,0));
       strip.show();
       delay(wait);
-      Serial.println("Success!");
+      //Serial.println("Success!");
     }else{
       //Serial.println(strip.numPixels());
       strip.setPixelColor(i, c);
@@ -157,6 +170,9 @@ char colorWipe(uint32_t c, uint8_t wait,int LED_mark) {
       if (data_1=='9'){
         return '9';
       }
+      if (data_1=='S'){
+        return 'S';
+      }
     }
   }
   return '0';
@@ -168,7 +184,7 @@ void colorChase(uint32_t c, uint8_t wait) {
 
   // Start by turning all pixels off:
   for(i=0; i<strip.numPixels(); i++) strip.setPixelColor(i, 0);
-  Serial.println(strip.numPixels());
+ // Serial.println(strip.numPixels());
 
   // Then display one pixel at a time:
   for(i=0; i<strip.numPixels(); i++) {
@@ -248,4 +264,59 @@ uint32_t Wheel(uint16_t WheelPos)
   }
   return(strip.Color(r,g,b));
 }
+
+void Motor (){
+      int i = 1;
+      int mark = -3;
+      int a;
+      int count=1;
+      int j;
+      while (count<3){
+      a=millis();
+      randomSeed(a);
+      //colorWipe(strip.Color(random(127), random(127), random(127)), 10, mark); 
+      uint32_t c=strip.Color(random(127), random(127), random(127));
+      for (i=0;i<strip.numPixels();i++){
+        Serial.print(" i is");
+        Serial.println(i);
+        strip.setPixelColor(i, c);
+        strip.show();
+        for (j=0;j<200;j++){
+        digitalWrite(9, HIGH);
+        delayMicroseconds(100);          
+        digitalWrite(9, LOW); 
+        delayMicroseconds(100);
+        Distance = Distance + 1;   // record this step
+        }
+          //Serial.println(Distance);
+        //if (Distance%2000==0){
+          //  colorWipe(strip.Color(random(127), random(127), random(127)), 10, mark); 
+        //}
+
+  // Check to see if we are at the end of our move
+         if (Distance == 10000){
+    // We are! Reverse direction (invert DIR signal)
+        if (digitalRead(8) == LOW)
+        {
+        digitalWrite(8, HIGH);
+        }
+         else
+        {
+         digitalWrite(8, LOW);
+        }
+    // Reset our distance back to zero since we're
+    // starting a new move
+         Distance = 0;
+    // Now pause for half a second
+        delay(500);
+        }
+      }
+      count++;
+      Serial.print("count is");
+
+      Serial.println(count);
+      }
+}
+
+
 
