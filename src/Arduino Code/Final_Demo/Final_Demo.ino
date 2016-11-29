@@ -93,7 +93,11 @@ while (data_2=='2'){
 
 char rainbow(uint8_t wait) {
   int i, j;
+<<<<<<< HEAD:src/Arduino Code/Final_Demo/Final_Demo.ino
   const int buttonPin = 7; 
+=======
+  const int buttonPin = 10; 
+>>>>>>> 8c5ae6ddd23d7a9a89075e3b66fe93cc9d98c1af:src/Arduino Code/Final_Demo/Final_Demo.ino
    
   for (j=0; j < 384; j++) {     // 3 cycles of all 384 colors in the wheel
     for (i=0; i < strip.numPixels(); i++) {
@@ -265,6 +269,7 @@ uint32_t Wheel(uint16_t WheelPos)
   return(strip.Color(r,g,b));
 }
 
+<<<<<<< HEAD:src/Arduino Code/Final_Demo/Final_Demo.ino
 void Motor (){
       int i = 1;
       int mark = -3;
@@ -320,3 +325,5 @@ void Motor (){
 
 
 
+=======
+>>>>>>> 8c5ae6ddd23d7a9a89075e3b66fe93cc9d98c1af:src/Arduino Code/Final_Demo/Final_Demo.ino
