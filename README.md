@@ -1,7 +1,5 @@
-Title:    BarBot
-Author: Peter
+#BarBot
 
-[TITLE]
 #Automatic Drink Mixing Machine
 
 This system is designed to control the cocktail machine with Zaber Scriptrunner and Arduino. This machine consists of an Arduino Uno, an EasyDriver v4.5 motor driver, an LED strip, a STM100 stepper motor, two Zaber linear stages (500mm and 750mm) and one Zaber lift stage (20mm). The machine will mix up to 4 kinds of alcohols loaded on the drink dispenser to make cocktails. It can stir the drink automatically as well.
