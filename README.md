@@ -1,4 +1,5 @@
 #BarBot
+![BarBot](Overview.jpeg)
 
 #Automatic Drink Mixing Machine
 
@@ -37,7 +38,7 @@ _ Note: The ClickOnce version cannot be used _
 * Button -> Arduino
 * Vin -> 3.3V
 * GND -> GND on Arduino
-* Pin -> Arduino Pin 7
+* Pin -> Arduino Pin 3
 
 * LED strip -> Arduino
 * Power Socket -> 12V power supply
@@ -45,11 +46,16 @@ _ Note: The ClickOnce version cannot be used _
 * CLK (green wire) -> Arduino Pin 2
 * DATA (blue wire) -> Arduino Pin 4
 
+![Breadboard](Breadboard.jpeg)
+
 * Connect two linear stagers (500mm & 750mm) to A-MCB2
 * Connect the lift stager to A-MCA
 * Connect A-MCA to A-MCB2
 * Connect A-MCB2 to computer
 * Connect Arduino to computer
+
+![Motor Controller](MotorController.jpeg)
+
 
 # Program pre-setup
 * Install Zaber Console [Details &amp; Downloads](http://www.zaber.com/wiki/Software/Zaber_Console)
@@ -71,14 +77,12 @@ Click OK. Click OK.
 # How to run the program 
 1. Connect motor controllers and Arduino to the computer
 2. Turn on the power
-3. Run Zaber Console, home all axes
-4. Exit Zaber Console
-5. Run ConsoleApplication1.exe
-6. Push the button on the breadboard
-7. If a new command window prompts out, it means the program has received the signal 
+3. Run Button_Standby.exe
+4. Push the button on the breadboard
+5. If a new command window prompts out, it means the program has received the signal 
 and will execute the script after several seconds.
-8. Wait for the whole process. (approx 1 min)
-9. If you want to run the program again, just push the button again
+6. Wait for the whole process. (approx 1 min)
+7. If you want to run the program again, just push the button.
 
 
 
