@@ -19,22 +19,29 @@ using Zaber.PlugIns;
         var axis3 = PortFacade.GetConversation(2);
         // Get conversations for the three devices you want to move.
         var currentPosition = Conversation.Request("get pos").Data;
+        axis1.Request("home");
+        axis2.Request("home");
+        axis3.Request("home");
+        axis1.PollUntilIdle();
+        axis2.PollUntilIdle();
+        axis3.PollUntilIdle();
+
 
 		myport.WriteLine("2"); // Send characters to the Arduino to change the LED pattern
             axis2.Request("set maxspeed",75000);
             axis2.Request("move abs 450000");
             myport.WriteLine("5");
             Godrink(1);
-            myport.WriteLine("5");
-            Godrink(1);
-            /*myport.WriteLine("6");
+            //myport.WriteLine("5");
+            //Godrink(1);
+            myport.WriteLine("6");
             Godrink(2);
             myport.WriteLine("7");
-            Godrink(3);*/
+            Godrink(3);
             myport.WriteLine("8");
             Godrink(4);
-            myport.WriteLine("8");
-            Godrink(4);
+            //myport.WriteLine("8");
+            //Godrink(4);
             myport.WriteLine("9");
             axis2.PollUntilIdle();
             axis2.Request("set maxspeed",150000);
@@ -83,11 +90,11 @@ using Zaber.PlugIns;
             var data_range_axis2=Convert.ToInt32(1007874/500*range_axis2);//the distance axis2 is going to travel in data unit
 
             if (drink_num==2){
-                data_range_axis1=445725;
+                data_range_axis1=445725;//"445725" is the position of the second drink dispenser. 
             } else if (drink_num==3){
-                data_range_axis1=646383;
+                data_range_axis1=646383;//"646383" is the position of the third drink dispenser. 
             } else if (drink_num==4){
-                data_range_axis1=849755;
+                data_range_axis1=840000;//"840000" is the position of the fourth drink dispenser. 
             }
             
             if (currentPosition != data_range_axis1){//Check if the axis1 need to move (Default situation, axis1 will move to the next dispenser)

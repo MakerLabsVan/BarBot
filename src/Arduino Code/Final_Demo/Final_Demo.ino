@@ -11,7 +11,7 @@ int mark=-3;
 // Chose 2 pins for output; can be any valid output pins:
 int dataPin  = 4;
 int clockPin = 2;
-const int buttonPin = 7; 
+const int buttonPin = 3; 
 int buttonState = 0;   
 int Distance=0;
 
@@ -93,7 +93,7 @@ while (data_2=='2'){
 
 char rainbow(uint8_t wait) {
   int i, j;
-  const int buttonPin = 7; 
+  const int buttonPin = 3; 
    
   for (j=0; j < 384; j++) {     // 3 cycles of all 384 colors in the wheel
     for (i=0; i < strip.numPixels(); i++) {
