@@ -19,10 +19,16 @@ This system is designed to control the cocktail machine with Zaber Scriptrunner 
 # Software Required
 * Zaber Console 2.0.10 [Download](http://www.zaber.com/support/software.php?file=zaber_console_installer)
 
-_ Note: The ClickOnce version cannot be used _
+_Note: The ClickOnce version cannot be used_
 
 * Arduino IDE [Download](https://www.arduino.cc/en/Main/Software)
 * LPD8806 Library
+
+#Schematic
+Stepper Motor Driver:
+![EasyDriver](EasyDriver.jpeg)
+
+A-MCB
 
 #Wiring
 * EasyDriver -> Arduino

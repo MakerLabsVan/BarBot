@@ -47,7 +47,7 @@ using Zaber.PlugIns;
             axis2.Request("set maxspeed",150000);
             axis1.Request("move abs 1511811");
              axis1.PollUntilIdle();
-            axis2.Request("move abs 700000");
+            axis2.Request("move abs 760000");
            
             axis2.PollUntilIdle();
             myport.WriteLine("S");
