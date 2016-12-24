@@ -40,12 +40,23 @@ A-MCB
 * Motor B2 -> Black wire
 * DIR -> Arduino Pin 8
 * STP -> Arduino Pin 9
-
+ 
+  
+   
+    
+     
+     
 * Button -> Arduino
 * Vin -> 3.3V
 * GND -> GND on Arduino
 * Pin -> Arduino Pin 3
 
+ 
+  
+   
+    
+     
+     
 * LED strip -> Arduino
 * Power Socket -> 12V power supply
 * GND (purple wire) -> Arduino ground
