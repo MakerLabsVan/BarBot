@@ -40,18 +40,16 @@ A-MCB
 * Motor B2 -> Black wire
 * DIR -> Arduino Pin 8
 * STP -> Arduino Pin 9
- 
-  
-   
-    
-     
+<br><br>
+<br><br>
      
 * Button -> Arduino
 * Vin -> 3.3V
 * GND -> GND on Arduino
 * Pin -> Arduino Pin 3
 
- 
+ <br><br>
+ <br><br>
   
    
     
