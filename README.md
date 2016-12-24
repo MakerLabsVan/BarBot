@@ -123,3 +123,4 @@ and will execute the script after several seconds.
 * [Example on how to use the EasyDriver motor driver](http://www.schmalzhaus.com/EasyDriver/Examples/EasyDriverExamples.html)
 * [The Github link to the LED strip libarary](https://github.com/adafruit/LPD8806)
 * [The adafruit tutorial on how to use the LED strip](https://learn.adafruit.com/digital-led-strip/overview)
+* [Arduino Button Tutorial](https://www.arduino.cc/en/Tutorial/Button)
