@@ -12,7 +12,7 @@ int mark=-3;
 int dataPin  = 4;
 int clockPin = 2;
 const int buttonPin = 3; 
-int buttonState = 0;   
+//int buttonState = 0;   
 int Distance=0;
 
 
@@ -51,7 +51,7 @@ char data_2 = '0';//set the initial value of data_2
 
 while (data_1 == '1'){
   data_2=rainbow(10);//the LED pattern when the machine is standby
-  buttonState = digitalRead(buttonPin);
+  int buttonState = digitalRead(buttonPin);
   if (buttonState == HIGH) {
       Serial.println("E");
       delay(1000);
@@ -98,12 +98,15 @@ char rainbow(uint8_t wait) {
   for (j=0; j < 384; j++) {     // 3 cycles of all 384 colors in the wheel
     for (i=0; i < strip.numPixels(); i++) {
       strip.setPixelColor(i, Wheel( (i + j) % 384));
-      char data= Serial.read();
-      int buttonState = digitalRead(buttonPin);
+     char data= Serial.read();
+     int buttonState = digitalRead(buttonPin);
       if (buttonState == HIGH) {
+        delay(100);
+        if (buttonState == HIGH) {
         Serial.println("E");
         delay(100);
-      } 
+        } 
+      }
       
       if (data=='2'){//check the serial port everytime writing the pixel.
         return '2';

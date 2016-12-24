@@ -77,19 +77,40 @@ A-MCB
 If you installed in the default location, you would change it to this: C:\Program Files\MSOffice;C:\Program Files\Zaber Technologies\Zaber Console 1.2.X
 Click OK. Click OK.
 * Connect the motor controllers and Arduino to the computer If you haven't
-* Check their port name in the device manager
-* Change the port name in the Port_communication.cs and Button_Standby.cs
+* Check their port names in the device manager
+* Change the Arduino's port name in the Port_communication.cs(line 73) and Button_Standby.cs (line 17)
+* Change the Zaber Motor Controller's port name in Port_communication.bat (after the /port)
+* Do a test run, If you encounter any problems, see the FAQ below (you can test the bat file first).
 
 # How to run the program 
-1. Connect motor controllers and Arduino to the computer
+1. Connect the Zaber motor controllers and the Arduino to the computer (USB, their port names may change, please double check the port name in the device manager.)
 2. Turn on the power
 3. Run Button_Standby.exe
 4. Push the button on the breadboard
-5. If a new command window prompts out, it means the program has received the signal 
+5. If a new command window prompts out, it means the program has received the signal.
 and will execute the script after several seconds.
 6. Wait for the whole process. (approx 1 min)
 7. If you want to run the program again, just push the button.
 
 
+#FAQ
 
+##My Bat file prompts a window but it disappears quickly. None of the axes are moving.
+* This is usually because of the wrong portal name of the Zaber moter controller. If the port name is wrong, the program cannot open the port successfully. Please check the device manager and set the correct portal name. You can modify the last line of the bat file from "exit" to "pause" to see why the program goes wrong.
 
+##The command line said there is something wrong with the "ScriptRunner.exe.config" file
+* Normally, this problem should not prevent the script from running. However, you can fix this problem by replacing that file in your Zaber Console folder with the version in the bin folder.
+
+##The axis did not stop at the correct location
+* Please using the Zaber Console to jog the axis to the correct position and using (/0 get pos) in the Advanced Tab to get the position read (unit in data). Then change the position in the bin/Zaber_Script/port_communication.cs(line 83 for dispenser1, line 93 for dispenser2, line 95 for dispenser3, line 97 for dispenser 4).
+
+#References:
+* [User Manual for Zaber A-MCB2 Motor Contorller](http://www.zaber.com/wiki/Manuals/A-MCB2)
+* [Script Instructions from ZaberWiki](http://www.zaber.com/wiki/Software/Zaber_Console/Scripting)
+* [Introduction to Zaber Console](http://www.zaber.com/wiki/Software/Zaber_Console)
+* [Online Video that shows how to read serial input from Arduino](https://www.youtube.com/watch?v=TNLp5UV0dMI&t=342s)
+*[Online Video that shows how to send serial data to Arduino](https://www.youtube.com/watch?v=WShhcGl3A6g)
+*[Online Documentation for the EasyDriver motor driver](http://www.schmalzhaus.com/EasyDriver/)
+*[Example on how to use the EasyDriver motor driver](http://www.schmalzhaus.com/EasyDriver/Examples/EasyDriverExamples.html)
+*[The Github link to the LED strip libarary](https://github.com/adafruit/LPD8806)
+*[The adafruit tutorial on how to use the LED strip](https://learn.adafruit.com/digital-led-strip/overview)

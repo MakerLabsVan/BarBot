@@ -5,7 +5,7 @@ using System.IO;
 using System.IO.Ports; //The .Net Framework library for serial port communication
 using Zaber;
 using Zaber.PlugIns;
-
+// The COM port name is in line 73. This is the port name of the Arduino.
 
     class Methods : PlugInBase
     {
